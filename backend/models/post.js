@@ -1,11 +1,11 @@
 import {Sequelize, Model, DataTypes} from 'sequelize';
 const sequelize = new Sequelize(
-    'smalltalk',
-    'mac',
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
     null, {
         host: 'localhost',
         dialect: 'postgres'
-    });
+});
 
 class Post extends Model {
 }
