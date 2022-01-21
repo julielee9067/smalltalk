@@ -1,21 +1,33 @@
 import express from 'express';
 import {Sequelize} from "sequelize";
+import Organization from "./models/organization.js"
+import User from "./models/user.js"
+import Post from "./models/post.js"
+import Comment from "./models/comment.js"
 
 const app = express();
 const port = 8000;
 
-const sequelize = new Sequelize('postgres://postgres:localhost:5432/smalltalk');
-const Organization = require("./models/organization")
-const User = require("./models/user")
-const Post = require("./models/post")
-const Comment = require("./models/comment")
+const sequelize = new Sequelize(
+    'smalltalk',
+    'mac',
+    null, {
+    host: 'localhost',
+    dialect: 'postgres'
+});
 
-sequelize.sync()
+const init = async () => {
+    await Organization.sync()
+    await User.sync()
+    await Post.sync()
+    await Comment.sync()
+}
 
 app.get('/', ((req, res) => {
     res.send('Hello world')
 }))
 
-app.listen(port, () => {
+app.listen(port, async () => {
+    await init()
     console.log(`Server running at http://localhost:${port}/`);
 })

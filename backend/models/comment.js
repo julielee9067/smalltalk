@@ -1,6 +1,11 @@
-const {Sequelize, Model, DataTypes} = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:localhost:5432/smalltalk');
-
+import {Sequelize, Model, DataTypes} from 'sequelize';
+const sequelize = new Sequelize(
+    'smalltalk',
+    'mac',
+    null, {
+        host: 'localhost',
+        dialect: 'postgres'
+    });
 
 class Comment extends Model {
 }
@@ -13,13 +18,17 @@ Comment.init({
     },
     user_id: {
         type: DataTypes.INTEGER,
-        references: "user",
-        referenceKey: "id"
+        references: {
+            model: "users",
+            key: "id"
+        }
     },
     post_id: {
         type: DataTypes.INTEGER,
-        references: "post",
-        referenceKey: "id"
+        references: {
+            model: "posts",
+            key: "id"
+        }
     },
     content: {
         type: DataTypes.STRING,
@@ -29,16 +38,6 @@ Comment.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    modified_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-}, {sequelize, modelName: "comment"});
+}, {sequelize, modelName: "comments"});
 
-module.exports = Comment
+export default Comment;

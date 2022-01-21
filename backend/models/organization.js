@@ -1,6 +1,11 @@
-const {Sequelize, Model, DataTypes} = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:localhost:5432/smalltalk');
-
+import {Sequelize, Model, DataTypes} from 'sequelize';
+const sequelize = new Sequelize(
+    'smalltalk',
+    'mac',
+    null, {
+        host: 'localhost',
+        dialect: 'postgres'
+    });
 
 class Organization extends Model {
 }
@@ -21,8 +26,7 @@ Organization.init({
             allowNull: true,
             unique: true
         },
-    }, {sequelize, modelName: "organization"}
+    }, {sequelize, modelName: "organizations"}
 );
 
-module.exports = Organization
-
+export default Organization;

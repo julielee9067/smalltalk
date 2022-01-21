@@ -1,6 +1,11 @@
-const {Sequelize, Model, DataTypes} = require('sequelize');
-const sequelize = new Sequelize('postgres://postgres:localhost:5432/smalltalk');
-
+import {Sequelize, Model, DataTypes} from 'sequelize';
+const sequelize = new Sequelize(
+    'smalltalk',
+    'mac',
+    null, {
+        host: 'localhost',
+        dialect: 'postgres'
+    });
 
 class Post extends Model {
 }
@@ -13,8 +18,10 @@ Post.init({
     },
     user_id: {
         type: DataTypes.INTEGER,
-        references: "user",
-        referenceKey: "id"
+        references: {
+            model: "users",
+            key: "id"
+        }
     },
     content: {
         type: DataTypes.STRING,
@@ -24,16 +31,6 @@ Post.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
-    created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    modified_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-}, {sequelize, modelName: "post"});
+}, {sequelize, modelName: "posts"});
 
-module.exports = Post
+export default Post;
