@@ -1,7 +1,7 @@
-import http from 'http';
+import express from 'express';
 import {Sequelize} from "sequelize";
 
-const hostname = '127.0.0.1';
+const app = express();
 const port = 8000;
 
 const sequelize = new Sequelize('postgres://postgres:localhost:5432/smalltalk');
@@ -12,12 +12,10 @@ const Comment = require("./models/comment")
 
 sequelize.sync()
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World');
-});
+app.get('/', ((req, res) => {
+    res.send('Hello world')
+}))
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
+})
