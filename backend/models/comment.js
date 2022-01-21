@@ -1,43 +1,47 @@
-import {Sequelize, Model, DataTypes} from 'sequelize';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USERNAME,
-    null, {
-        host: 'localhost',
-        dialect: 'postgres'
-});
+  process.env.DB_NAME,
+  process.env.DB_USERNAME,
+  null,
+  {
+    host: 'localhost',
+    dialect: 'postgres',
+  }
+);
 
-class Comment extends Model {
-}
+class Comment extends Model {}
 
-Comment.init({
+Comment.init(
+  {
     id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "users",
-            key: "id"
-        }
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
     },
     post_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "posts",
-            key: "id"
-        }
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'posts',
+        key: 'id',
+      },
     },
     content: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     status: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-}, {sequelize, modelName: "comments"});
+  },
+  { sequelize, modelName: 'comments' }
+);
 
 export default Comment;
